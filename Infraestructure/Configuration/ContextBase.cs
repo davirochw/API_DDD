@@ -31,7 +31,7 @@ namespace Infraestructure.Configuration
 
         public string ObterStringConexao()
         {
-            return "Server=localhost,1433;Database=database_ddd;User ID=sa;Password=User%%102;Trusted_Connection=False; TrustServerCertificate=True;";
+            return "Server=localhost,1433;Database=database_ddd;User ID=sa;Password=User%%102;Trusted_Connection=False;TrustServerCertificate=True;";
         }
     }
 }
