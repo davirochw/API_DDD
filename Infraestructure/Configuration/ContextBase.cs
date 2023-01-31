@@ -6,8 +6,8 @@ namespace Infraestructure.Configuration
 {
     public class ContextBase : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Message> Message { get; set; }
-        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<Message> Message { get; set; } = null!;
+        public DbSet<ApplicationUser> ApplicationUser { get; set; } = null!;
 
         public ContextBase(DbContextOptions<ContextBase> options) : base(options)
         {
