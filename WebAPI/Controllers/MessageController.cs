@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Interfaces;
+using Domain.Interfaces.InterfaceServices;
 using Entities.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,11 +15,13 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper iMapper;
         private readonly IMessage iMessage;
+        private readonly IServiceMessage iServiceMessage;
 
-        public MessageController(IMapper iMapper, IMessage iMessage)
+        public MessageController(IMapper iMapper, IMessage iMessage, IServiceMessage iServiceMessage)
         {
             this.iMapper = iMapper;
             this.iMessage = iMessage;
+            this.iServiceMessage = iServiceMessage;
         }
 
         [Authorize]
@@ -28,7 +31,7 @@ namespace WebAPI.Controllers
         {
             message.UserId = await RetornarIdUsuarioLogado();
             var messageMap = iMapper.Map<Message>(message);
-            await iMessage.Add(messageMap);
+            await iServiceMessage.Add(messageMap);
             return messageMap.Notificacoes;
         }
 
@@ -38,7 +41,7 @@ namespace WebAPI.Controllers
         public async Task<List<Notifies>> Update(MessageViewModel message)
         {
             var messageMap = iMapper.Map<Message>(message);
-            await iMessage.Update(messageMap);
+            await iServiceMessage.Update(messageMap);
             return messageMap.Notificacoes;
         }
 
@@ -64,10 +67,20 @@ namespace WebAPI.Controllers
 
         [Authorize]
         [Produces("application/json")]
-        [HttpPost("/api/GetEntityById")]
+        [HttpPost("/api/List")]
         public async Task<List<MessageViewModel>> List()
         {
             var mensagens = await iMessage.List();
+            var messageMap = iMapper.Map<List<MessageViewModel>>(mensagens);
+            return messageMap;
+        }
+
+        [Authorize]
+        [Produces("application/json")]
+        [HttpPost("/api/ListMessageActive")]
+        public async Task<List<MessageViewModel>> ListMessageActive()
+        {
+            var mensagens = await iServiceMessage.ListMessageActive();
             var messageMap = iMapper.Map<List<MessageViewModel>>(mensagens);
             return messageMap;
         }

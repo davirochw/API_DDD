@@ -40,7 +40,8 @@ namespace Infraestructure.Repository.Generics
 
         public async Task<T> GetEntityById(int Id)
         {
-            using (var data = new ContextBase(optionsBuilder)){
+            using (var data = new ContextBase(optionsBuilder))
+            {
                 return await data.Set<T>().FindAsync(Id);
             }
         }
