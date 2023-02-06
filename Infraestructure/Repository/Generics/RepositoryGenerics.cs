@@ -2,12 +2,7 @@
 using Infraestructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infraestructure.Repository.Generics
 {
@@ -35,7 +30,7 @@ namespace Infraestructure.Repository.Generics
             {
                 data.Set<T>().Remove(Objeto);
                 await data.SaveChangesAsync();
-            }      
+            }
         }
 
         public async Task<T> GetEntityById(int Id)
@@ -51,7 +46,7 @@ namespace Infraestructure.Repository.Generics
             using (var data = new ContextBase(optionsBuilder))
             {
                 return await data.Set<T>().ToListAsync();
-            }    
+            }
         }
 
         public async Task Update(T Objeto)
@@ -60,7 +55,7 @@ namespace Infraestructure.Repository.Generics
             {
                 data.Set<T>().Update(Objeto);
                 await data.SaveChangesAsync();
-            }   
+            }
         }
 
         // To detect redundant calls
@@ -88,7 +83,7 @@ namespace Infraestructure.Repository.Generics
                 handle.Dispose();
             }
 
-            disposed = true; 
+            disposed = true;
         }
     }
 }
